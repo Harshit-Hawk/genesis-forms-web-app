@@ -1292,10 +1292,10 @@
       "form": "InnovateX",
       "formName": "InnovateX",
       "formId": "d52749b4be",
-      "submitted": "10/28/2026 15:12:41",
-      "submittedAt": "10/28/2026 15:12:41",
+      "submitted": "10/29/2026 11:34:57",
+      "submittedAt": "10/29/2026 11:34:57",
       "answers": {
-        "Timestamp": "10/28/2026 15:12:41",
+        "Timestamp": "10/29/2026 11:34:57",
         "Email Address": "23010001014@gateway.edu.in",
         "Track / Project Area": "Artificial Intelligence & Machine Learning",
         "Total Members": "3",
@@ -6973,6 +6973,71 @@
       "utr": "https://drive.google.com/open?id=17djvpJGdDXx_YMnGsUzlFbr1MTsri-FF",
       "checkedIn": false,
       "checked_in": false
+    },
+    {
+      "id": "21e55ac1f1:10",
+      "form": "Pixel Perfect",
+      "formName": "Pixel Perfect",
+      "formId": "21e55ac1f1",
+      "submitted": "10/29/2026 11:50:53",
+      "submittedAt": "10/29/2026 11:50:53",
+      "answers": {
+        "Timestamp": "10/29/2026 11:50:53",
+        "Email Address": "safdarshaziya52@gmail.com",
+        "Participation Type": "Duo",
+        "Team Name": "Team Khadija coders",
+        "Team Leader Full Name": "Iram parween",
+        "Team Leader Email ID": "Perweeni120@gmail.com",
+        "Team Leader Mobile Number (WhatsApp)": "8404854582",
+        "College/University": "IITM Murthal",
+        "Course & Branch (e.g. B.Tech CSE, BBA, MCA, B.Arch)": "B.tech",
+        "Year": "3rd",
+        "Team Member Name ( If Not fill N/A)": "Team Khadija",
+        "College/University ( If Not fill N/A)": "IITM Murthal",
+        "Course & Branch (e.g. B.Tech CSE, BBA, MCA, B.Arch)  ( If Not fill N/A)": "B.Tech",
+        "Year (If Not fill N/A)": "3rd",
+        "College Identity Cards of All Members": "https://drive.google.com/open?id=1YCNHR9YNVbO_pYUGc5EUcQKvFWqVcPhz",
+        "Payment QR Code": "Done",
+        "Upload a payment screenshot showing the amount and UTR / transaction ID": "https://drive.google.com/open?id=1_FCz6qX7SXZ-8EgKKEeYuoSjeS0-avVV",
+        "Payment Transaction / UTR ID": "161625022408",
+        "Date of Transaction": "10/29/2026",
+        "Rules & Regulations.\nI confirm that the information submitted in this form is accurate.\nI understand that the registration fee is ₹50 per participant.\nI understand that complete pre-built templates and copied projects are prohibited.\nI agree to develop an original solution and explain my team's design decisions.\nI understand that registration is subject to payment verification by the college finance office.\nI consent to the use of my submitted information for event registration and administration.": "I agree with all the Rules & Regulations."
+      },
+      "attendeeName": "Iram parween",
+      "teamName": "Team Khadija coders",
+      "team_name": "Team Khadija coders",
+      "phone": "8404854582",
+      "utr": "https://drive.google.com/open?id=1_FCz6qX7SXZ-8EgKKEeYuoSjeS0-avVV",
+      "checkedIn": false,
+      "checked_in": false
+    },
+    {
+      "id": "be570e6031:8",
+      "form": "Slide Sizzle",
+      "formName": "Slide Sizzle",
+      "formId": "be570e6031",
+      "submitted": "10/29/2026 11:40:06",
+      "submittedAt": "10/29/2026 11:40:06",
+      "answers": {
+        "Timestamp": "10/29/2026 11:40:06",
+        "Email Address": "yuvikabh.rwa2007@gmail.com",
+        "Name": "Yuvika bharti",
+        "Mobile Number (WhatsApp)": "8813976972",
+        "Email ID": "yuvikabh.rwa2007@gmail.com",
+        "College/University": "Delhi University",
+        "Course & Branch (e.g. B.Tech CSE, BBA, MCA, B.Arch)": "b.com",
+        "Year": "2 nd",
+        "College Identity Cards of All Members": "https://drive.google.com/open?id=15OoUpuxEY848hxYFSoMO0kcYDuGq0D4c",
+        "Payment QR Code": "Done",
+        "Upload a payment screenshot showing the amount and UTR / transaction ID": "https://drive.google.com/open?id=1Oj_Vh7Fss2HKlyRlhLRRIf844xfIE-Qs",
+        "Payment Transaction / UTR ID": "630222518457",
+        "Date of Transaction": "10/29/2026"
+      },
+      "attendeeName": "Yuvika bharti",
+      "phone": "8813976972",
+      "utr": "https://drive.google.com/open?id=1Oj_Vh7Fss2HKlyRlhLRRIf844xfIE-Qs",
+      "checkedIn": false,
+      "checked_in": false
     }
   ],
   "attendance": {
@@ -6981,5 +7046,5 @@
       "checkedInBy": "Organizer"
     }
   },
-  "lastSyncedAt": 1793253811110
+  "lastSyncedAt": 1793255909595
 }
