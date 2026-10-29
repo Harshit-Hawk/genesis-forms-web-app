@@ -1,0 +1,2490 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Genesis Forms · Event Registration Desk</title>
+  <meta name="theme-color" content="#22593b">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Genesis Desk">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2322593b'/%3E%3Ctext x='50' y='68' font-size='56' font-family='sans-serif' font-weight='800' fill='white' text-anchor='middle'%3EG%3C/text%3E%3C/svg%3E">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@500&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f6f8f5;
+      color: #1c221e;
+      font: 14px 'DM Sans', sans-serif;
+    }
+
+    .shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+    }
+
+    .side {
+      background: #fff;
+      border-right: 1px solid #e7ebe4;
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand {
+      font: 800 18px Manrope;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 10px 30px;
+      letter-spacing: -0.5px;
+    }
+
+    .logo {
+      background: #22593b;
+      color: #fff;
+      border-radius: 9px;
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      font-size: 15px;
+      box-shadow: 0 4px 12px #22593b30;
+    }
+
+    .event-badge {
+      background: #edf6ef;
+      color: #22593b;
+      border: 1px solid #d3e7d7;
+      border-radius: 8px;
+      padding: 9px 12px;
+      margin-bottom: 22px;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .event-badge b {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: #18442c;
+    }
+
+    .cap {
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: #8e958c;
+      font-weight: 700;
+      margin: 12px 10px 8px;
+      text-transform: uppercase;
+    }
+
+    .nav,
+    .formnav {
+      padding: 9px 12px;
+      border-radius: 8px;
+      color: #5a6358;
+      cursor: pointer;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-weight: 500;
+    }
+
+    .nav.active {
+      background: #eaf3ec;
+      color: #22593b;
+      font-weight: 700;
+    }
+
+    .formnav {
+      font-size: 12px;
+      padding: 8px 10px;
+      margin-left: 6px;
+      position: relative;
+    }
+
+    .formnav .formname-label {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .btn-form-del {
+      opacity: 0;
+      background: transparent;
+      border: 0;
+      color: #929a8f;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: all .15s ease;
+      margin-left: auto;
+    }
+
+    .formnav:hover .btn-form-del {
+      opacity: 1;
+    }
+
+    .btn-form-del:hover {
+      background: #fdf2f0;
+      color: #b33927;
+    }
+
+    .nav:hover,
+    .formnav:hover {
+      background: #f2f5f0;
+      color: #1c221e;
+    }
+
+    .count {
+      margin-left: auto;
+      color: #8b9288;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 3px;
+      background: #c5973b;
+      flex-shrink: 0;
+    }
+
+    .workspace {
+      margin-top: auto;
+      border-top: 1px solid #e7ebe4;
+      padding: 14px 10px 0;
+      color: #727a6f;
+      font-size: 11px;
+    }
+
+    .main {
+      padding: 32px 42px;
+      max-width: 1480px;
+      width: 100%;
+      margin: auto;
+    }
+
+    .top,
+    .line,
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .top {
+      color: #7b8277;
+      font-size: 12px;
+      margin-bottom: 26px;
+    }
+
+    .live {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .pulse {
+      width: 8px;
+      height: 8px;
+      background: #3fa86a;
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px #3fa86a25;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 1.2px;
+      color: #22593b;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .title {
+      font: 800 30px Manrope;
+      letter-spacing: -1px;
+      margin: 4px 0 6px;
+    }
+
+    .sub {
+      color: #6e766b;
+      font-size: 13px;
+    }
+
+    .btn {
+      background: #fff;
+      border: 1px solid #dbe1d7;
+      color: #343c32;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font: 600 12px 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: all .15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn:hover {
+      background: #f6f8f5;
+      border-color: #cbd3c6;
+    }
+
+    .btn.primary {
+      background: #22593b;
+      border-color: #22593b;
+      color: #fff;
+    }
+
+    .btn.primary:hover {
+      background: #19462d;
+      border-color: #19462d;
+    }
+
+    .btn:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+    }
+
+    /* Attendance KPI Cards */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin: 24px 0;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #e7ebe4;
+      border-radius: 12px;
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 1px 3px #00000008;
+    }
+
+    .card.highlight {
+      border-color: #bee2c7;
+      background: linear-gradient(180deg, #f7fbf8 0%, #fff 100%);
+    }
+
+    .card-label {
+      color: #7b8377;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .metric {
+      font: 800 28px Manrope;
+      margin: 10px 0 4px;
+      color: #1a221c;
+    }
+
+    .metric-sub {
+      font-size: 11px;
+      color: #878f83;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* Desk Toolbar */
+    .toolbar {
+      gap: 10px;
+      background: #fff;
+      padding: 12px 14px;
+      border: 1px solid #e7ebe4;
+      border-radius: 12px 12px 0 0;
+      flex-wrap: wrap;
+    }
+
+    .search {
+      flex: 1;
+      min-width: 260px;
+      max-width: 380px;
+      position: relative;
+    }
+
+    .search input,
+    .field {
+      width: 100%;
+      border: 1px solid #dce2d8;
+      background: #fbfcfb;
+      border-radius: 8px;
+      padding: 9px 12px;
+      font: 13px 'DM Sans', sans-serif;
+      outline: none;
+      transition: .15s;
+    }
+
+    .search input:focus,
+    .field:focus {
+      border-color: #22593b;
+      background: #fff;
+      box-shadow: 0 0 0 3px #22593b15;
+    }
+
+    .select {
+      border: 1px solid #dce2d8;
+      background: #fff;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font: 600 12px 'DM Sans', sans-serif;
+      color: #434c41;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .select:focus {
+      border-color: #22593b;
+    }
+
+    .day-pill {
+      background: #eef5f0;
+      color: #22593b;
+      border: 1px solid #c9decb;
+      border-radius: 7px;
+      padding: 7px 11px;
+      font: 700 12px 'DM Sans';
+      cursor: pointer;
+    }
+
+    /* Table */
+    .tablebox {
+      background: #fff;
+      border: 1px solid #e7ebe4;
+      border-top: 0;
+      overflow: auto;
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 1px 3px #00000008;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 860px;
+    }
+
+    th {
+      text-align: left;
+      font-size: 11px;
+      letter-spacing: 0.6px;
+      color: #868e82;
+      text-transform: uppercase;
+      padding: 12px 16px;
+      border-bottom: 1px solid #e7ebe4;
+      background: #fafbfa;
+    }
+
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f0f3ee;
+      font-size: 13px;
+      color: #3c443a;
+      vertical-align: middle;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    tr:hover td {
+      background: #fafcf9;
+    }
+
+    /* Attendance Buttons */
+    .btn-checkin {
+      background: #22593b;
+      border: 1px solid #22593b;
+      color: #fff;
+      border-radius: 7px;
+      padding: 6px 12px;
+      font: 700 12px 'DM Sans';
+      cursor: pointer;
+      transition: all .15s;
+    }
+
+    .btn-checkin:hover {
+      background: #18442c;
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px #22593b25;
+    }
+
+    .btn-checked {
+      background: #eaf6ed;
+      border: 1px solid #bce1c5;
+      color: #1e5a36;
+      border-radius: 7px;
+      padding: 6px 10px;
+      font: 700 11px 'DM Sans';
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-undo {
+      background: transparent;
+      border: 0;
+      color: #849080;
+      font-size: 10px;
+      cursor: pointer;
+      text-decoration: underline;
+      margin-left: 6px;
+      padding: 0;
+    }
+
+    .btn-undo:hover {
+      color: #a33b32;
+    }
+
+    /* Details Styling */
+    .squad-title {
+      font: 700 14px Manrope;
+      color: #18201a;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .tag {
+      color: #366343;
+      background: #edf4ee;
+      border-radius: 5px;
+      padding: 3px 7px;
+      font-size: 11px;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .captain-contact {
+      font-size: 12px;
+      color: #434c41;
+      line-height: 1.4;
+    }
+
+    .wa-link {
+      color: #1f7743;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .wa-link:hover {
+      text-decoration: underline;
+    }
+
+    .utr-code {
+      font: 600 11px 'JetBrains Mono', monospace;
+      background: #f4f6f2;
+      border: 1px solid #e1e6de;
+      padding: 3px 7px;
+      border-radius: 5px;
+      color: #2d362a;
+    }
+
+    .empty {
+      padding: 50px 20px;
+      text-align: center;
+      color: #6b7367;
+    }
+
+    .tiny {
+      color: #8c9388;
+      font-size: 11px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translate(-50%, 15px);
+      opacity: 0;
+      transition: .22s cubic-bezier(.16, 1, .3, 1);
+      background: #192a1f;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 600;
+      pointer-events: none;
+      z-index: 9999;
+      box-shadow: 0 10px 30px #00000030;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    /* Modals */
+    .veil {
+      position: fixed;
+      inset: 0;
+      background: #131b1575;
+      backdrop-filter: blur(3px);
+      display: none;
+      place-items: center;
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    .veil.show {
+      display: grid;
+    }
+
+    .modal {
+      background: #fff;
+      width: min(600px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 28px;
+      border-radius: 14px;
+      box-shadow: 0 24px 70px #00000030;
+    }
+
+    .modal h2 {
+      font: 800 22px Manrope;
+      margin: 0 0 6px;
+      letter-spacing: -0.5px;
+    }
+
+    .modal p {
+      font-size: 13px;
+      line-height: 1.5;
+      color: #6b7367;
+      margin: 0 0 18px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    /* Team Inspection Card */
+    .team-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ecf0ea;
+      margin-bottom: 16px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .info-card {
+      background: #fbfcfb;
+      border: 1px solid #e7ebe4;
+      border-radius: 9px;
+      padding: 12px 14px;
+    }
+
+    .info-card h4 {
+      margin: 0 0 6px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: #878f83;
+      font-weight: 700;
+    }
+
+    .roster-table {
+      width: 100%;
+      font-size: 12px;
+      margin-top: 8px;
+      border-collapse: collapse;
+    }
+
+    .roster-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid #edf1eb;
+    }
+
+    .roster-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .hide {
+      display: none !important;
+    }
+
+    .connecthint {
+      padding: 14px;
+      border: 1px solid #e8eee5;
+      border-radius: 9px;
+      background: #fafcf9;
+      color: #6e786b;
+      font-size: 12px;
+      line-height: 1.5;
+      margin: 20px 0;
+    }
+
+    /* Mobile App Header (Hidden on Desktop) */
+    .mobile-header {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid #e7ebe4;
+      padding: 10px 14px;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .mobile-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font: 800 16px Manrope;
+      color: #1c221e;
+    }
+
+    .logo.mini {
+      width: 28px;
+      height: 28px;
+      font-size: 13px;
+      border-radius: 7px;
+    }
+
+    .pulse.mini {
+      width: 6px;
+      height: 6px;
+    }
+
+    .btn-icon {
+      background: transparent;
+      border: 1px solid #e2e7e0;
+      border-radius: 8px;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      color: #2c352d;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all .15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-icon:active {
+      background: #eaf3ec;
+      transform: scale(0.95);
+    }
+
+    .mobile-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .drawer-header-mobile {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #eef2ec;
+    }
+
+    .drawer-header-mobile .brand {
+      padding: 0;
+    }
+
+    .drawer-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(18, 27, 20, 0.5);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      z-index: 998;
+    }
+
+    .drawer-backdrop.show {
+      display: block;
+    }
+
+    /* Mobile Bottom Navigation Bar (Hidden on Desktop) */
+    .mobile-bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid #e7ebe4;
+      padding: 6px 12px calc(6px + env(safe-area-inset-bottom, 0px));
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.04);
+    }
+
+    .bnav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 0;
+      color: #6d756a;
+      cursor: pointer;
+      padding: 6px 2px;
+      border-radius: 8px;
+      transition: all .15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .bnav-item.active {
+      color: #22593b;
+      font-weight: 700;
+    }
+
+    .bnav-icon {
+      font-size: 17px;
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+
+    .bnav-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+
+    /* View Toggle Switch */
+    .view-toggle-wrap {
+      display: inline-flex;
+      background: #edf1eb;
+      padding: 3px;
+      border-radius: 8px;
+      gap: 3px;
+    }
+
+    .view-btn {
+      border: 0;
+      background: transparent;
+      padding: 6px 11px;
+      border-radius: 6px;
+      font: 700 11px 'DM Sans';
+      color: #636c60;
+      cursor: pointer;
+      transition: all .15s ease;
+    }
+
+    .view-btn.active {
+      background: #fff;
+      color: #1a231d;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    /* Card-Based Registration List */
+    .cardsbox {
+      margin-top: 14px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 14px;
+    }
+
+    .attendee-card {
+      background: #fff;
+      border: 1px solid #e6eae3;
+      border-radius: 14px;
+      padding: 16px 18px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+
+    .attendee-card:hover {
+      box-shadow: 0 4px 14px rgba(34, 89, 59, 0.08);
+      border-color: #cbd8cc;
+    }
+
+    .attendee-card.is-checked {
+      border-color: #c0e0c8;
+      background: linear-gradient(180deg, #f9fdfa 0%, #ffffff 100%);
+    }
+
+    .acard-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .acard-form-tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: #eaf3ec;
+      color: #22593b;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 140px;
+    }
+
+    .acard-time {
+      font-size: 11px;
+      color: #8c9489;
+      margin-left: auto;
+    }
+
+    .acard-status-pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .acard-status-pill.pill-checked {
+      background: #e8f5ec;
+      color: #1e6b37;
+      border: 1px solid #c9e8d1;
+    }
+
+    .acard-status-pill.pill-pending {
+      background: #fdf5eb;
+      color: #a05a18;
+      border: 1px solid #f6dec3;
+    }
+
+    .acard-body {
+      cursor: pointer;
+    }
+
+    .acard-title {
+      font: 800 17px Manrope;
+      margin: 0 0 4px;
+      color: #17211a;
+      letter-spacing: -0.3px;
+      line-height: 1.3;
+    }
+
+    .acard-subtitle {
+      font-size: 12px;
+      color: #636b60;
+      line-height: 1.4;
+    }
+
+    .acard-info-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+      margin-top: 10px;
+      padding: 10px 12px;
+      background: #fbfcfb;
+      border: 1px solid #edf1eb;
+      border-radius: 9px;
+      font-size: 12px;
+    }
+
+    .ainfo-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow: hidden;
+    }
+
+    .ainfo-label {
+      font-weight: 700;
+      color: #7b8377;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    .ainfo-link {
+      color: #22593b;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .ainfo-link:hover {
+      text-decoration: underline;
+    }
+
+    .utr-code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      background: #f2f5f1;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #313930;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .proof-link {
+      margin-left: auto;
+      font-size: 11px;
+      font-weight: 700;
+      color: #22593b;
+      text-decoration: underline;
+      flex-shrink: 0;
+    }
+
+    .acard-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 8px;
+      border-top: 1px solid #f1f4ef;
+    }
+
+    .btn-roster {
+      background: #fbfcfb;
+      border: 1px solid #dce2d8;
+      color: #434c41;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 7px 11px;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    .btn-roster:hover {
+      background: #f2f5f0;
+      color: #18201a;
+    }
+
+    .acard-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Touch & Tablet Ergonomics */
+    @media (max-width: 900px) {
+      .shell {
+        display: block;
+        min-height: 100vh;
+      }
+
+      .mobile-header {
+        display: flex;
+      }
+
+      .drawer-header-mobile {
+        display: flex;
+      }
+
+      /* Slide-out Drawer */
+      .side {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: min(300px, 85vw);
+        z-index: 999;
+        transform: translateX(-100%);
+        transition: transform .25s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+        overflow-y: auto;
+      }
+
+      .side.open {
+        transform: translateX(0);
+      }
+
+      .main {
+        padding: 16px 14px 80px;
+      }
+
+      .main .top {
+        display: none; /* Replaced by mobile header */
+      }
+
+      .line {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+        margin-bottom: 16px;
+      }
+
+      .line > .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .cards {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin: 16px 0;
+      }
+
+      .card {
+        padding: 14px;
+      }
+
+      .metric {
+        font-size: 24px;
+      }
+
+      .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+
+      .search {
+        max-width: 100%;
+        min-width: 100%;
+      }
+
+      .toolbar-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .toolbar-row > select {
+        flex: 1;
+        min-width: 130px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .mobile-bottom-nav {
+        display: grid;
+      }
+
+      .main {
+        padding: 14px 12px calc(76px + env(safe-area-inset-bottom, 0px));
+      }
+
+      .cards {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      /* Native Bottom Sheet for Modals on Phones */
+      .veil {
+        align-items: flex-end;
+        padding: 0;
+      }
+
+      .modal {
+        width: 100%;
+        max-width: 100%;
+        max-height: 85vh;
+        border-radius: 20px 20px 0 0;
+        padding: 24px 20px calc(24px + env(safe-area-inset-bottom, 0px));
+        animation: slideUpModal .22s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      @keyframes slideUpModal {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+      }
+    }
+
+    /* Auth Screen */
+    .auth-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: radial-gradient(circle at 50% 10%, #eaf3ec 0%, #f6f8f5 60%);
+    }
+
+    .auth-card {
+      background: #fff;
+      border: 1px solid #e7ebe4;
+      border-radius: 16px;
+      width: min(440px, 100%);
+      padding: 36px 32px;
+      box-shadow: 0 12px 40px #0000000a;
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .brand-icon {
+      background: #22593b;
+      color: #fff;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font: 800 20px Manrope;
+      margin: 0 auto 14px;
+      box-shadow: 0 6px 16px #22593b25;
+    }
+
+    .auth-title {
+      font: 800 24px Manrope;
+      letter-spacing: -0.5px;
+      margin: 0 0 6px;
+    }
+
+    .auth-sub {
+      color: #6f776c;
+      font-size: 13px;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .auth-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #f1f4ef;
+      border-radius: 9px;
+      padding: 4px;
+      margin-bottom: 22px;
+      gap: 4px;
+    }
+
+    .auth-tab {
+      border: 0;
+      background: transparent;
+      padding: 8px 12px;
+      border-radius: 7px;
+      font: 700 12px 'DM Sans';
+      color: #6f776c;
+      cursor: pointer;
+      transition: all .15s ease;
+    }
+
+    .auth-tab.active {
+      background: #fff;
+      color: #1c221e;
+      box-shadow: 0 2px 6px #0000000d;
+    }
+
+    .field-group {
+      margin-bottom: 16px;
+      text-align: left;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: #434c41;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .field-wrap {
+      position: relative;
+    }
+
+    .toggle-pass {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: 0;
+      color: #8c9489;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 4px;
+    }
+
+    .auth-alert {
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      line-height: 1.4;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    .auth-alert.error {
+      background: #fdf2f0;
+      color: #b33927;
+      border: 1px solid #f2dedb;
+      display: block;
+    }
+
+    .auth-alert.success {
+      background: #eaf6ed;
+      color: #1e5a36;
+      border: 1px solid #cce5d2;
+      display: block;
+    }
+
+    .auth-foot {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 12px;
+      color: #6f776c;
+    }
+
+    .auth-foot a {
+      color: #22593b;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .auth-foot a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Normal Sign In / Sign Up Screen -->
+  <div id="authScreen" class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="brand-icon">G</div>
+        <h1 class="auth-title" id="authHeading">Welcome to Genesis Forms</h1>
+        <p class="auth-sub" id="authSub">Sign in to access the Event Registration & Attendance Desk.</p>
+      </div>
+
+      <!-- Tabs: Sign In vs Sign Up -->
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab active" id="tabSignIn">Sign In</button>
+        <button type="button" class="auth-tab" id="tabSignUp">Create Account</button>
+      </div>
+
+      <div id="authAlert" class="auth-alert"></div>
+
+      <form id="authForm" onsubmit="return false;">
+        <div class="field-group">
+          <label class="field-label" for="authEmail">Email address</label>
+          <input class="field" type="email" id="authEmail" placeholder="you@company.com" autocomplete="email" value="harshitgujjar73@gmail.com" required>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="authPassword">Password</label>
+          <div class="field-wrap">
+            <input class="field" type="password" id="authPassword" placeholder="••••••••" autocomplete="current-password" required minlength="6">
+            <button type="button" class="toggle-pass" id="btnTogglePass" title="Show/Hide Password">👁</button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn primary" id="btnSubmitAuth" style="width: 100%; justify-content: center; padding: 11px;">
+          <span id="btnAuthText">Sign In</span>
+        </button>
+      </form>
+
+      <div class="auth-foot">
+        <span id="authToggleHint">Don't have an account?</span>
+        <a id="btnToggleMode">Create one now</a>
+      </div>
+
+      <div style="margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); text-align: center;">
+        <button type="button" class="btn" id="btnGuestAccess" style="width: 100%; justify-content: center; font-size: 12px; padding: 9px;">
+          Continue as Guest
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Protected Desk Shell -->
+  <div id="app" class="shell hide">
+    <!-- Mobile App Header (Smartphones & Tablets) -->
+    <header class="mobile-header">
+      <button type="button" class="btn-icon" id="btnToggleDrawer" aria-label="Open Navigation">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+      <div class="mobile-brand">
+        <span class="logo mini">G</span>
+        <span>Genesis Desk</span>
+        <span class="pulse mini"></span>
+      </div>
+      <div class="mobile-actions">
+        <button type="button" class="btn-icon" id="btnMobileInstall" title="Install App to Home Screen" style="display:none; color:#22593b; font-size:14px;">
+          📲
+        </button>
+        <button type="button" class="btn-icon" id="mobileViewToggle" title="Toggle Cards / Table">
+          <span id="mobileViewIcon">▤</span>
+        </button>
+        <button type="button" class="btn-icon" id="mobileRefresh" title="Refresh Now">
+          ↻
+        </button>
+      </div>
+    </header>
+
+    <!-- Drawer Backdrop Overlay -->
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+    <aside class="side" id="drawerSide">
+      <div class="drawer-header-mobile">
+        <div class="brand" style="padding:0;">
+          <span class="logo">G</span>
+          <span class="brandname">Genesis Forms</span>
+        </div>
+        <button type="button" class="btn-icon" id="btnCloseDrawer" aria-label="Close Drawer">✕</button>
+      </div>
+
+      <div class="brand">
+        <span class="logo">G</span>
+        <span class="brandname">Genesis Forms</span>
+      </div>
+
+      <div class="event-badge">
+        <b>Tournament Event Desk</b>
+        Dates: 30 & 31 Oct
+      </div>
+
+      <div class="cap">WORKSPACE</div>
+      <div class="nav active"><span class="ico">▦</span><span>Check-In Desk</span></div>
+      <div class="nav" id="navResponses"><span class="ico">↗</span><span>All Records</span><span class="count"
+          id="sideTotal">0</span></div>
+
+      <div class="cap" style="margin-top: 20px">FORMS</div>
+      <div id="formNav"></div>
+      <div class="nav" id="addSide">＋ &nbsp;Connect another form</div>
+      <div class="nav" id="manageSide"><span class="ico">⚙</span><span>Manage Forms</span></div>
+
+      <div class="workspace">
+        <b>Signed in as:</b><br>
+        <span id="userEmailBadge" style="font-weight:700; color:#18442c; word-break:break-all;">—</span><br>
+        <button class="btn" id="btnSignOut" style="margin-top: 10px; width: 100%; justify-content: center; font-size:11px;">Sign Out</button>
+      </div>
+
+      <div id="pwaInstallWrap" style="margin-top: 16px; padding: 12px; background: #eaf3ec; border-radius: 10px; border: 1px solid #d3e5d7; font-size: 12px; color: #1e4f34; display: none;">
+        <div style="font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+          <span>📲</span> <span>Install Genesis App</span>
+        </div>
+        <div style="font-size: 11px; color: #386049; margin-bottom: 8px;">Add to your home screen for instant full-screen access without browser bars.</div>
+        <button type="button" class="btn primary" id="btnInstallPwa" style="width: 100%; justify-content: center; padding: 7px 10px; font-size: 11px;">Install App</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="top">
+        <div>Tournament Desk &nbsp; / &nbsp; <b style="color: #22593b">Attendance & Verification</b></div>
+        <div class="live">
+          <span class="pulse"></span>
+          <span id="syncText">Live · connected</span>
+          <button class="btn" id="google">Google Connected</button>
+          <button class="btn" id="refresh">↻ Refresh Now</button>
+        </div>
+      </div>
+
+      <div class="line">
+        <div>
+          <div class="eyebrow">REGISTRATION & ATTENDANCE DESK</div>
+          <h1 class="title">Team Verification & Check-In</h1>
+          <div class="sub">Verify squad payment, validate player rosters, and mark attendance in real time.</div>
+        </div>
+        <button class="btn primary" id="connect">＋ Connect Form</button>
+      </div>
+
+      <div id="setup" class="connecthint hide"></div>
+
+      <!-- Attendance KPI Cards -->
+      <div class="cards">
+        <div class="card">
+          <div class="card-label">Total Registered</div>
+          <div class="metric" id="totalTeams">0</div>
+          <div class="metric-sub">Across connected forms</div>
+        </div>
+
+        <div class="card highlight">
+          <div class="card-label">Checked In (<span id="dayCardLabel">Day 1</span>)</div>
+          <div class="metric" style="color: #22593b;" id="checkedInCount">0</div>
+          <div class="metric-sub"><span class="badge-dot" style="background:#3fa86a;"></span> <span
+              id="checkinPercent">0%</span> of total teams present</div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Pending Arrival</div>
+          <div class="metric" style="color: #a46114;" id="pendingCount">0</div>
+          <div class="metric-sub"><span class="badge-dot" style="background:#d9822b;"></span> Squads not checked in yet
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Last Ingested</div>
+          <div class="metric" style="font-size: 20px; margin-top: 15px;" id="lastSync">—</div>
+          <div class="metric-sub">Auto-polls Google Sheets every 60s</div>
+        </div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <div class="search">
+          <input id="search" placeholder="Search squad, captain, phone, UTR...">
+        </div>
+
+        <div class="toolbar-row">
+          <!-- Day Selector -->
+          <select id="daySelect" class="select" style="font-weight: 700; color: #22593b; background: #eef6f0;">
+            <option value="Day 1">Day 1 (30 Oct)</option>
+            <option value="Day 2">Day 2 (31 Oct)</option>
+          </select>
+
+          <!-- Attendance Filter -->
+          <select id="attFilter" class="select">
+            <option value="">All Status</option>
+            <option value="checked">✓ Checked In</option>
+            <option value="pending">⏳ Pending</option>
+          </select>
+
+          <!-- Form Filter -->
+          <select id="filter" class="select">
+            <option value="">All Forms</option>
+          </select>
+        </div>
+
+        <div class="toolbar-row" style="margin-left: auto; gap: 8px;">
+          <!-- View Mode Toggle -->
+          <div class="view-toggle-wrap">
+            <button type="button" class="view-btn active" id="btnViewCards" title="Mobile Cards View">▤ Cards</button>
+            <button type="button" class="view-btn" id="btnViewTable" title="Data Table View">▦ Table</button>
+          </div>
+          <span class="count" id="rowCount">0 teams</span>
+          <button class="btn" id="export" style="white-space: nowrap;">↓ Export CSV</button>
+        </div>
+      </div>
+
+      <!-- Touch & Mobile Optimized Card List -->
+      <div class="cardsbox" id="cardsBox">
+        <div id="cardsGrid" class="cards-grid"></div>
+        <div id="cardsEmpty" class="empty hide">No matching participants or squads found.</div>
+      </div>
+
+      <!-- Submissions Table (Desktop & Wide Screen Mode) -->
+      <div class="tablebox hide" id="tableBox">
+        <table>
+          <thead id="thead">
+            <tr>
+              <th style="width: 170px;">Attendance Status</th>
+              <th>Participant / Squad</th>
+              <th>Contact / Leader</th>
+              <th>Payment UTR</th>
+              <th>Registered</th>
+              <th style="text-align: right;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+        <div id="empty" class="empty">Loading teams...</div>
+      </div>
+    </main>
+
+    <!-- Mobile Bottom Navigation Bar (Phones / < 640px) -->
+    <nav class="mobile-bottom-nav">
+      <button type="button" class="bnav-item active" id="bnavDesk">
+        <span class="bnav-icon">▦</span>
+        <span class="bnav-label">Desk</span>
+      </button>
+      <button type="button" class="bnav-item" id="bnavViewToggle">
+        <span class="bnav-icon" id="bnavViewIcon">▤</span>
+        <span class="bnav-label">Cards</span>
+      </button>
+      <button type="button" class="bnav-item" id="bnavAdd">
+        <span class="bnav-icon">＋</span>
+        <span class="bnav-label">Add Form</span>
+      </button>
+      <button type="button" class="bnav-item" id="bnavManage">
+        <span class="bnav-icon">⚙</span>
+        <span class="bnav-label">Manage</span>
+      </button>
+      <button type="button" class="bnav-item" id="bnavRefresh">
+        <span class="bnav-icon">↻</span>
+        <span class="bnav-label">Sync</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Team Detail & Verification Modal -->
+  <div class="veil" id="teamVeil">
+    <div class="modal">
+      <div class="team-header">
+        <div>
+          <span class="eyebrow" id="mFormName">Form</span>
+          <h2 id="mSquadName">Squad Name</h2>
+          <span id="mCollege" class="tag">College</span>
+        </div>
+        <div id="mCheckinAction"></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="info-card">
+          <h4>Captain Information</h4>
+          <div style="font-size: 14px; font-weight: 700;" id="mCaptainName">—</div>
+          <div class="captain-contact" style="margin-top: 6px;">
+            📱 WhatsApp: <a id="mCaptainPhone" target="_blank" class="wa-link">—</a><br>
+            ✉️ Email: <span id="mCaptainEmail" style="color: #555;">—</span>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h4>Payment & Proof</h4>
+          <div style="font-size: 13px;"><b>UTR:</b> <span id="mUtr" class="utr-code">—</span></div>
+          <div style="margin-top: 8px;">
+            <a id="mPaymentProof" target="_blank" class="btn" style="font-size: 11px; padding: 5px 9px;">🔗 Open Payment
+              Screenshot</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-card" style="margin-bottom: 16px;">
+        <h4>Player Roster & BGMI IDs</h4>
+        <table class="roster-table">
+          <tbody id="mRosterRows"></tbody>
+        </table>
+      </div>
+
+      <div class="info-card">
+        <h4>Verification Checklist for Desk</h4>
+        <label
+          style="display: flex; gap: 8px; align-items: center; margin-bottom: 6px; font-size: 12px; cursor: pointer;">
+          <input type="checkbox" id="chkUtr"> Payment UTR / screenshot verified
+        </label>
+        <label style="display: flex; gap: 8px; align-items: center; font-size: 12px; cursor: pointer;">
+          <input type="checkbox" id="chkId"> College ID cards confirmed
+        </label>
+      </div>
+
+      <div class="actions">
+        <button class="btn" id="closeTeamModal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Connect Form Modal -->
+  <div class="veil" id="veil">
+    <div class="modal">
+      <h2>Connect a Google Form</h2>
+      <p>In Google Forms, open <b>Responses → Link to Sheets</b>, then paste the response spreadsheet link below.</p>
+      <label style="display: block; font-size: 11px; font-weight: 700; margin: 12px 0 6px;">Display name</label>
+      <input class="field" id="formName" placeholder="BGMI Championship">
+      <label style="display: block; font-size: 11px; font-weight: 700; margin: 12px 0 6px;">Google Sheets link</label>
+      <input class="field" id="formUrl" placeholder="https://docs.google.com/spreadsheets/d/…">
+      <div class="err" id="modalError" style="color: #a34a3f; font-size: 12px; margin-top: 8px;"></div>
+      <div class="actions">
+        <button class="btn" id="cancel">Cancel</button>
+        <button class="btn primary" id="save">Connect</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Manage Forms Modal -->
+  <div class="veil" id="manageVeil">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="manageTitle" style="max-width: 520px;">
+      <h2 id="manageTitle">Connected Forms</h2>
+      <p>View or disconnect Google response sheets linked to the registration desk.</p>
+      <div id="manageFormsList" style="display: flex; flex-direction: column; gap: 10px; margin: 18px 0; max-height: 50vh; overflow-y: auto;"></div>
+      <div class="actions">
+        <button class="btn" id="closeManage">Close</button>
+        <button class="btn primary" id="addFromManage" style="width: auto;">＋ Connect Another Form</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm Delete Modal -->
+  <div class="veil" id="deleteVeil">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="deleteTitle" style="max-width: 440px;">
+      <h2 id="deleteTitle" style="color: #b33927;">Disconnect this form?</h2>
+      <p style="margin-bottom: 12px;">Are you sure you want to disconnect <b id="delFormTitle">—</b>?</p>
+      <div style="background: #fdf2f0; border: 1px solid #f2dedb; border-radius: 8px; padding: 12px; font-size: 12px; color: #7f3b33; line-height: 1.5; margin-bottom: 20px;">
+        <b>Google Sheet is safe:</b> This only removes the form from the registration desk. The original Google Sheet in your Google Drive will <b>not</b> be deleted.
+      </div>
+      <div class="actions">
+        <button class="btn" id="cancelDelete">Cancel</button>
+        <button class="btn" id="confirmDelete" style="background: #b33927; border-color: #b33927; color: #fff; font-weight: 700;">Disconnect Form</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    let forms = [], responses = [], attendanceMap = {};
+    const $ = id => document.getElementById(id);
+
+    // Play pleasant check-in chime using Web Audio API
+    function playChime(success = true) {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(success ? 587.33 : 349.23, ctx.currentTime); // D5 or F4
+        if (success) osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.12); // A5
+        gain.gain.setValueAtTime(0.15, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.25);
+      } catch (e) { }
+    }
+
+    function toast(s) {
+      $('toast').textContent = s;
+      $('toast').classList.add('show');
+      setTimeout(() => $('toast').classList.remove('show'), 2600);
+    }
+
+    function esc(s) {
+      return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    async function api(path, opts = {}) {
+      const token = localStorage.getItem('gf_auth_token') || '';
+      let r = await fetch(path, {
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': 'Bearer ' + token } : {})
+        },
+        ...opts
+      });
+      let d = await r.json();
+      if (!r.ok) throw Error(d.error || 'Request failed');
+      return d;
+    }
+
+    // Extract squad name, participant name, phone, etc. gracefully from any form structure
+    function parseTeam(answers = {}) {
+      const entries = Object.entries(answers);
+      const find = (...patterns) => {
+        for (const [k, v] of entries) {
+          if (patterns.some(p => k.toLowerCase().includes(p.toLowerCase()))) return v;
+        }
+        return '';
+      };
+
+      const squad = find('squad name', 'team name', 'squad');
+      const personName = find('captain name', 'leader', 'full name', 'candidate name', 'participant name') || find('name') || entries[2]?.[1] || '';
+      const isTeam = Boolean(squad);
+
+      return {
+        isTeam,
+        squadName: squad || personName || entries[1]?.[1] || 'Registered Participant',
+        captainName: personName || (isTeam ? 'Captain' : 'Participant'),
+        captainPhone: find('contact number', 'mobile', 'phone', 'whatsapp') || '',
+        captainEmail: find('email') || '',
+        rollNo: find('roll number', 'roll no', 'reg no', 'student id', 'enrollment') || '',
+        branch: find('branch', 'course', 'stream', 'department') || '',
+        college: find('college', 'university', 'institution', 'school') || '',
+        utr: find('utr', 'transaction', 'payment id') || '',
+        proofUrl: find('screenshot', 'payment proof', 'drive.google.com') || '',
+        p2: find('player 2') || '',
+        p3: find('player 3') || '',
+        p4: find('player 4') || '',
+        bgmiIds: find('bgmi id', 'game id', 'all players') || '',
+        all: answers
+      };
+    }
+
+    // Toggle check-in status for selected day
+    window.toggleAtt = async function (id, checkIn) {
+      const day = $('daySelect').value;
+      try {
+        await api('/api/attendance', {
+          method: 'POST',
+          body: JSON.stringify({ id, checked_in: checkIn, day })
+        });
+        playChime(checkIn);
+        const resp = responses.find(r => r.id === id);
+        const team = parseTeam(resp?.answers);
+        toast(checkIn ? `✓ ${team.squadName} checked in for ${day}!` : `Undid check-in for ${team.squadName}`);
+        await sync(false);
+        if ($('teamVeil').classList.contains('show')) openTeam(id);
+      } catch (e) {
+        toast('Error: ' + e.message);
+      }
+    };
+
+    // Open full team/participant modal
+    window.openTeam = function (id) {
+      const resp = responses.find(r => r.id === id);
+      if (!resp) return;
+      const team = parseTeam(resp.answers);
+      const day = $('daySelect').value;
+      const isChecked = !!resp.attendance?.[day]?.checked_in;
+      const checkTime = resp.attendance?.[day]?.time || '';
+
+      $('mFormName').textContent = resp.form + (team.isTeam ? ' · Team Event' : ' · Solo Event');
+      $('mSquadName').textContent = team.squadName;
+
+      let metaBadges = [];
+      if (team.college) metaBadges.push(team.college);
+      if (team.rollNo) metaBadges.push('Roll: ' + team.rollNo);
+      if (team.branch) metaBadges.push(team.branch);
+      $('mCollege').textContent = metaBadges.join(' • ') || 'Participant details';
+
+      $('mCaptainName').textContent = team.captainName;
+      $('mCaptainEmail').textContent = team.captainEmail || '—';
+
+      const cleanPhone = (team.captainPhone || '').replace(/\D/g, '');
+      $('mCaptainPhone').textContent = team.captainPhone || '—';
+      $('mCaptainPhone').href = cleanPhone ? `https://wa.me/${cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone}` : '#';
+
+      $('mUtr').textContent = team.utr || 'Not provided';
+      $('mPaymentProof').style.display = team.proofUrl ? 'inline-flex' : 'none';
+      $('mPaymentProof').href = team.proofUrl || '#';
+
+      // Roster rows or Participant details
+      let rosterHtml = '';
+      if (team.isTeam || team.p2) {
+        rosterHtml = `
+        <tr><td><b>Captain (Player 1)</b></td><td>${esc(team.captainName)}</td><td>${esc(team.captainPhone)}</td></tr>
+        <tr><td><b>Player 2</b></td><td>${esc(team.p2 || '—')}</td><td>—</td></tr>
+        <tr><td><b>Player 3</b></td><td>${esc(team.p3 || '—')}</td><td>—</td></tr>
+        <tr><td><b>Player 4</b></td><td>${esc(team.p4 || '—')}</td><td>—</td></tr>
+      `;
+        if (team.bgmiIds) {
+          rosterHtml += `<tr><td colspan="3"><b>BGMI IDs:</b> ${esc(team.bgmiIds)}</td></tr>`;
+        }
+      } else {
+        rosterHtml = `
+        <tr><td><b>Participant Name</b></td><td colspan="2">${esc(team.captainName)}</td></tr>
+        <tr><td><b>Roll Number</b></td><td colspan="2">${esc(team.rollNo || '—')}</td></tr>
+        <tr><td><b>Branch / Course</b></td><td colspan="2">${esc(team.branch || '—')}</td></tr>
+        <tr><td><b>College / University</b></td><td colspan="2">${esc(team.college || '—')}</td></tr>
+        <tr><td><b>Contact Number</b></td><td colspan="2">${esc(team.captainPhone || '—')}</td></tr>
+        <tr><td><b>Email</b></td><td colspan="2">${esc(team.captainEmail || '—')}</td></tr>
+      `;
+      }
+      $('mRosterRows').innerHTML = rosterHtml;
+
+      // Checkin button in modal
+      if (isChecked) {
+        $('mCheckinAction').innerHTML = `<span class="btn-checked">✓ Checked In (${esc(checkTime)})</span><br><button class="btn-undo" onclick="toggleAtt('${id}', false)">Undo</button>`;
+      } else {
+        $('mCheckinAction').innerHTML = `<button class="btn-checkin" onclick="toggleAtt('${id}', true)">✓ Check In Now</button>`;
+      }
+
+      $('teamVeil').classList.add('show');
+    };
+
+    $('closeTeamModal').onclick = () => $('teamVeil').classList.remove('show');
+    $('teamVeil').onclick = e => { if (e.target === $('teamVeil')) $('teamVeil').classList.remove('show'); };
+
+    function render() {
+      const f = $('filter').value;
+      const q = $('search').value.toLowerCase().trim();
+      const day = $('daySelect').value;
+      const attFilter = $('attFilter').value;
+
+      $('dayCardLabel').textContent = day;
+
+      // Calculate metrics
+      let totalChecked = 0;
+      responses.forEach(r => {
+        if (r.attendance?.[day]?.checked_in) totalChecked++;
+      });
+
+      const totalCount = responses.length;
+      const pendingCount = Math.max(0, totalCount - totalChecked);
+      const percent = totalCount > 0 ? Math.round((totalChecked / totalCount) * 100) : 0;
+
+      $('totalTeams').textContent = totalCount;
+      $('sideTotal').textContent = totalCount;
+      $('checkedInCount').textContent = totalChecked;
+      $('pendingCount').textContent = pendingCount;
+      $('checkinPercent').textContent = percent + '%';
+
+      // Filter responses
+      let items = responses.filter(x => {
+        if (f && x.form !== f) return false;
+        const isChecked = !!x.attendance?.[day]?.checked_in;
+        if (attFilter === 'checked' && !isChecked) return false;
+        if (attFilter === 'pending' && isChecked) return false;
+        if (q && !JSON.stringify(x.answers).toLowerCase().includes(q)) return false;
+        return true;
+      });
+
+      $('rowCount').textContent = items.length + ' of ' + totalCount + ' teams';
+
+      // Form Navigation
+      $('formNav').innerHTML = forms.map(x =>
+        `<div class="formnav" data-id="${x.id}">
+           <span class="dot"></span>
+           <span class="formname-label">${esc(x.name)}</span>
+           <button class="btn-form-del" title="Disconnect form" onclick="requestDeleteForm(event, '${x.id}', '${esc(x.name)}')">✕</button>
+         </div>`
+      ).join('');
+      $('formNav').querySelectorAll('.formnav').forEach(el => el.onclick = (e) => {
+        if (e.target.closest('.btn-form-del')) return;
+        $('filter').value = forms.find(x => x.id === el.dataset.id)?.name || '';
+        render();
+      });
+
+      // Populate filter dropdown
+      const curFilter = $('filter').value;
+      $('filter').innerHTML = '<option value="">All Forms</option>' + forms.map(x => `<option value="${esc(x.name)}">${esc(x.name)}</option>`).join('');
+      if (curFilter) $('filter').value = curFilter;
+
+      // Render table rows (for table view)
+      $('rows').innerHTML = items.map(x => {
+        const team = parseTeam(x.answers);
+        const isChecked = !!x.attendance?.[day]?.checked_in;
+        const attTime = x.attendance?.[day]?.time || '';
+
+        const attButton = isChecked
+          ? `<div class="btn-checked">✓ Checked In <span style="font-weight:400; font-size:10px;">(${esc(attTime)})</span></div><button class="btn-undo" onclick="toggleAtt('${x.id}', false)">Undo</button>`
+          : `<button class="btn-checkin" onclick="toggleAtt('${x.id}', true)">✓ Check In</button>`;
+
+        const cleanPhone = (team.captainPhone || '').replace(/\D/g, '');
+        const waLink = cleanPhone ? `<a href="https://wa.me/${cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone}" target="_blank" class="wa-link">📱 ${esc(team.captainPhone)}</a>` : '—';
+
+        const subBadge = team.isTeam
+          ? (team.college ? `<span class="tag">${esc(team.college)}</span>` : '')
+          : `<span class="tag">${esc([team.rollNo ? 'Roll: ' + team.rollNo : '', team.college].filter(Boolean).join(' • ') || 'Solo')}</span>`;
+
+        const contactCell = team.isTeam
+          ? `<b>${esc(team.captainName)}</b><br>${waLink}`
+          : `${waLink}${team.branch ? `<br><span class="tiny">${esc(team.branch)}</span>` : ''}`;
+
+        return `<tr>
+        <td>${attButton}</td>
+        <td>
+          <span class="squad-title" style="cursor:pointer;" onclick="openTeam('${x.id}')">${esc(team.squadName)}</span>
+          ${subBadge}
+        </td>
+        <td>${contactCell}</td>
+        <td>
+          ${team.utr ? `<span class="utr-code">${esc(team.utr)}</span>` : '<span class="tiny">—</span>'}
+        </td>
+        <td style="color:#777; font-size:12px;">${esc(x.submitted || '—')}</td>
+        <td style="text-align: right;">
+          <button class="btn" onclick="openTeam('${x.id}')">${team.isTeam ? '👁 Squad Roster' : '👁 View Details'}</button>
+        </td>
+      </tr>`;
+      }).join('');
+
+      // Render cards (for mobile & card view)
+      $('cardsGrid').innerHTML = items.map(x => {
+        const team = parseTeam(x.answers);
+        const isChecked = !!x.attendance?.[day]?.checked_in;
+        const attTime = x.attendance?.[day]?.time || '';
+        const cleanPhone = (team.captainPhone || '').replace(/\D/g, '');
+        const attButton = isChecked
+          ? `<div class="btn-checked" style="padding:6px 11px; font-size:11px;">✓ Checked In <span style="font-weight:400; font-size:10px;">(${esc(attTime)})</span></div><button class="btn-undo" style="padding:6px 11px; font-size:11px;" onclick="event.stopPropagation(); toggleAtt('${x.id}', false)">Undo</button>`
+          : `<button class="btn-checkin" style="padding:8px 16px; font-size:12px;" onclick="event.stopPropagation(); toggleAtt('${x.id}', true)">✓ Check In</button>`;
+
+        return `
+          <div class="attendee-card ${isChecked ? 'is-checked' : ''}">
+            <div class="acard-header">
+              <span class="acard-form-tag">${esc(x.form)}</span>
+              <span class="acard-time">${esc(x.submitted || '')}</span>
+              <span class="acard-status-pill ${isChecked ? 'pill-checked' : 'pill-pending'}">
+                ${isChecked ? '✓ Present' : '⏳ Pending'}
+              </span>
+            </div>
+
+            <div class="acard-body" onclick="openTeam('${x.id}')">
+              <h3 class="acard-title">${esc(team.squadName || team.captainName || 'Unnamed')}</h3>
+              <div class="acard-subtitle">
+                ${team.isTeam ? `Captain: <b>${esc(team.captainName)}</b>` : `Roll No: <b>${esc(team.rollNo || '—')}</b>`}
+                ${team.college ? ` · <span style="color:#22593b; font-weight:600;">${esc(team.college)}</span>` : ''}
+              </div>
+
+              <div class="acard-info-grid">
+                <div class="ainfo-item">
+                  <span class="ainfo-label">Contact:</span>
+                  ${cleanPhone ? `<a href="https://wa.me/${cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone}" target="_blank" class="ainfo-link whatsapp-btn" onclick="event.stopPropagation()">💬 ${esc(team.captainPhone)}</a>` : '<span class="ainfo-val">—</span>'}
+                </div>
+                <div class="ainfo-item">
+                  <span class="ainfo-label">Payment UTR:</span>
+                  <span class="utr-code">${esc(team.utr || 'N/A')}</span>
+                  ${team.proofUrl ? `<a href="${esc(team.proofUrl)}" target="_blank" class="proof-link" onclick="event.stopPropagation()">Proof ↗</a>` : ''}
+                </div>
+              </div>
+            </div>
+
+            <div class="acard-footer">
+              <button type="button" class="btn-roster" onclick="openTeam('${x.id}')">
+                ${team.isTeam ? 'Squad Roster' : 'View Details'}
+              </button>
+              <div class="acard-action">
+                ${attButton}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Empty state message
+      let emptyMsg = '';
+      if (items.length === 0) {
+        if (forms.length === 0) {
+          emptyMsg = 'No connected forms yet.<br><span class="tiny">Connect a Google Form response sheet to start viewing teams.</span>';
+        } else if (responses.length === 0) {
+          emptyMsg = `Connected form: <b>${esc(forms.map(x => x.name).join(', '))}</b><br><span class="tiny">0 registrations in Google Sheets yet. Submit your Google Form to see squads appear here!</span>`;
+        } else if (attFilter === 'checked') {
+          emptyMsg = `No squads checked in yet for <b>${esc(day)}</b>.<br><span class="tiny">Click "Check In" on arriving squads to mark attendance.</span>`;
+        } else if (attFilter === 'pending') {
+          emptyMsg = `All teams have checked in for <b>${esc(day)}</b>! 🎉<br><span class="tiny">100% attendance recorded.</span>`;
+        } else {
+          emptyMsg = `No squads matching your search filter.<br><span class="tiny">Try clearing your search.</span>`;
+        }
+        $('empty').innerHTML = emptyMsg;
+        $('cardsEmpty').innerHTML = emptyMsg;
+      }
+      $('empty').classList.toggle('hide', items.length > 0);
+      $('cardsEmpty').classList.toggle('hide', items.length > 0);
+      $('thead').classList.toggle('hide', items.length === 0);
+    }
+
+    async function sync(force = false, showToast = false) {
+      try {
+        let conf = await api('/api/config');
+        $('google').textContent = conf.connected ? 'Google Connected' : 'Connect Google';
+        $('connect').disabled = !conf.connected;
+
+        let d = await api('/api/forms');
+        forms = d.forms || [];
+
+        if (!conf.connected) throw Error('Connect your Google account to authorize access to response sheets.');
+
+        let r = await api('/api/responses' + (force ? '?force=1' : ''));
+        responses = r.responses || [];
+        attendanceMap = r.attendance || {};
+
+        if (r.warning) {
+          $('syncText').textContent = 'Cached · Google quota recovering';
+          $('syncText').style.color = '#c97a1e';
+          if (showToast) toast(r.warning);
+        } else {
+          $('syncText').textContent = r.cached ? 'Live · cached' : 'Live · synced just now';
+          $('syncText').style.color = '';
+          if (showToast) toast('Responses refreshed!');
+        }
+
+        $('lastSync').textContent = new Date((r.synced_at || Date.now() / 1000) * 1000).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+        $('setup').classList.add('hide');
+        render();
+      } catch (e) {
+        if (responses && responses.length > 0) {
+          $('syncText').textContent = 'Cached mode';
+          $('syncText').style.color = '#c97a1e';
+          render();
+        } else {
+          $('syncText').textContent = 'Needs attention';
+          $('setup').textContent = e.message;
+          $('setup').classList.remove('hide');
+          render();
+        }
+      }
+    }
+
+    // Event handlers
+    $('google').onclick = () => { window.location.href = '/oauth/start'; };
+    $('connect').onclick = $('addSide').onclick = () => $('veil').classList.add('show');
+    $('cancel').onclick = () => $('veil').classList.remove('show');
+    $('veil').onclick = e => { if (e.target === $('veil')) $('veil').classList.remove('show'); };
+
+    $('save').onclick = async () => {
+      try {
+        await api('/api/forms', {
+          method: 'POST',
+          body: JSON.stringify({ name: $('formName').value, url: $('formUrl').value })
+        });
+        $('veil').classList.remove('show');
+        $('formName').value = '';
+        $('formUrl').value = '';
+        $('modalError').textContent = '';
+        await sync();
+        toast('Form connected successfully!');
+      } catch (e) {
+        $('modalError').textContent = e.message;
+      }
+    };
+
+    $('refresh').onclick = async () => {
+      $('syncText').textContent = 'Syncing...';
+      await sync(true, true);
+    };
+
+    // Form Deletion and Management Handlers
+    let formToDelete = null;
+
+    window.requestDeleteForm = function(e, id, name) {
+      if (e) e.stopPropagation();
+      formToDelete = { id, name };
+      $('delFormTitle').textContent = name;
+      $('deleteVeil').classList.add('show');
+    };
+
+    $('cancelDelete').onclick = () => {
+      $('deleteVeil').classList.remove('show');
+      formToDelete = null;
+    };
+
+    $('deleteVeil').onclick = e => {
+      if (e.target === $('deleteVeil')) {
+        $('deleteVeil').classList.remove('show');
+        formToDelete = null;
+      }
+    };
+
+    $('confirmDelete').onclick = async () => {
+      if (!formToDelete) return;
+      const { id, name } = formToDelete;
+      $('confirmDelete').disabled = true;
+      $('confirmDelete').textContent = 'Disconnecting...';
+      try {
+        await api('/api/forms/' + id + '/delete', { method: 'POST' });
+        $('deleteVeil').classList.remove('show');
+        if ($('manageVeil').classList.contains('show')) renderManageModal();
+        if ($('filter').value === name) $('filter').value = '';
+        toast(`Form "${name}" disconnected.`);
+        await sync();
+      } catch (e) {
+        toast('Failed to disconnect form: ' + e.message);
+      } finally {
+        $('confirmDelete').disabled = false;
+        $('confirmDelete').textContent = 'Disconnect Form';
+        formToDelete = null;
+      }
+    };
+
+    function renderManageModal() {
+      if (forms.length === 0) {
+        $('manageFormsList').innerHTML = '<div style="text-align: center; color: #777; padding: 24px 10px;">No forms connected yet.<br><span style="font-size: 11px; color: #888;">Click "Connect Another Form" to add a Google Form response sheet.</span></div>';
+        return;
+      }
+      $('manageFormsList').innerHTML = forms.map(f => {
+        const respCount = responses.filter(r => r.form === f.name).length;
+        return `
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; background: #fafbfa; border: 1px solid #e7ebe4; border-radius: 9px;">
+            <div style="flex: 1; padding-right: 12px; overflow: hidden;">
+              <div style="font-weight: 700; font-size: 13px; color: #1c221e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${esc(f.name)}</div>
+              <div style="font-size: 11px; color: #7c8477; margin-top: 3px;">
+                <span>${respCount} submissions</span> ·
+                <a href="https://docs.google.com/spreadsheets/d/${f.sheet_id}" target="_blank" style="color: #22593b; text-decoration: underline;">Open Google Sheet ↗</a>
+              </div>
+            </div>
+            <button class="btn manage-disconnect" data-id="${esc(f.id)}" data-name="${esc(f.name)}" style="color: #b33927; border-color: #f1cfcc; background: #fff; font-size: 11px; padding: 6px 12px; font-weight: 700; cursor: pointer;">
+              Disconnect
+            </button>
+          </div>
+        `;
+      }).join('');
+      $('manageFormsList').querySelectorAll('.manage-disconnect').forEach(button => {
+        button.onclick = e => requestDeleteForm(e, button.dataset.id, button.dataset.name);
+      });
+    }
+
+    $('manageSide').onclick = () => {
+      renderManageModal();
+      $('manageVeil').classList.add('show');
+    };
+    $('closeManage').onclick = () => $('manageVeil').classList.remove('show');
+    $('manageVeil').onclick = e => { if (e.target === $('manageVeil')) $('manageVeil').classList.remove('show'); };
+    $('addFromManage').onclick = () => {
+      $('manageVeil').classList.remove('show');
+      $('formName').value = '';
+      $('formUrl').value = '';
+      $('modalError').textContent = '';
+      $('veil').classList.add('show');
+    };
+
+    $('search').oninput = render;
+    $('search').onkeydown = e => {
+      if (e.key === 'Enter') {
+        const day = $('daySelect').value;
+        const q = $('search').value.toLowerCase().trim();
+        if (!q) return;
+        const match = responses.find(x => !x.attendance?.[day]?.checked_in && JSON.stringify(x.answers).toLowerCase().includes(q));
+        if (match) {
+          toggleAtt(match.id, true);
+          $('search').value = '';
+          render();
+        }
+      }
+    };
+
+    // Keyboard shortcut: '/' focuses search
+    window.addEventListener('keydown', e => {
+      if (e.key === '/' && document.activeElement !== $('search') && !$('veil').classList.contains('show') && !$('teamVeil').classList.contains('show')) {
+        e.preventDefault();
+        $('search').focus();
+      }
+    });
+
+    $('filter').onchange = render;
+    $('daySelect').onchange = render;
+    $('attFilter').onchange = render;
+
+    // Export Comprehensive CSV with Both Day 1 & Day 2 Attendance Data
+    $('export').onclick = () => {
+      const rows = [[
+        'Form',
+        'Event Type',
+        'Squad / Participant Name',
+        'Captain / Candidate',
+        'Roll Number',
+        'College',
+        'Contact WhatsApp',
+        'Payment UTR',
+        'Submitted At',
+        'Day 1 (30 Oct) Checked In',
+        'Day 1 Timestamp',
+        'Day 2 (31 Oct) Checked In',
+        'Day 2 Timestamp'
+      ]];
+
+      responses.forEach(r => {
+        const t = parseTeam(r.answers);
+        const d1 = r.attendance?.['Day 1'];
+        const d2 = r.attendance?.['Day 2'];
+        rows.push([
+          r.form,
+          t.isTeam ? 'Team Event' : 'Solo Event',
+          t.squadName,
+          t.captainName,
+          t.rollNo,
+          t.college,
+          t.captainPhone,
+          t.utr,
+          r.submitted,
+          d1?.checked_in ? 'PRESENT' : 'ABSENT',
+          d1?.time || '',
+          d2?.checked_in ? 'PRESENT' : 'ABSENT',
+          d2?.time || ''
+        ]);
+      });
+
+      const csv = rows.map(r => r.map(v => '"' + String(v ?? '').replaceAll('"', '""') + '"').join(',')).join('\n');
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+      a.download = `genesis-attendance-oct30-31-${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+      toast('Attendance CSV report downloaded!');
+    };
+
+    // Responsive View Mode & Mobile Controller
+    let viewMode = localStorage.getItem('gf_view_mode') || (window.innerWidth <= 800 ? 'cards' : 'cards');
+
+    function updateViewModeUI() {
+      const isCards = viewMode === 'cards';
+      if ($('btnViewCards')) $('btnViewCards').classList.toggle('active', isCards);
+      if ($('btnViewTable')) $('btnViewTable').classList.toggle('active', !isCards);
+      if ($('cardsBox')) $('cardsBox').classList.toggle('hide', !isCards);
+      if ($('tableBox')) $('tableBox').classList.toggle('hide', isCards);
+      if ($('mobileViewIcon')) $('mobileViewIcon').textContent = isCards ? '▦' : '▤';
+      if ($('bnavViewIcon')) $('bnavViewIcon').textContent = isCards ? '▦' : '▤';
+      if ($('mobileViewToggle')) $('mobileViewToggle').title = isCards ? 'Switch to Table View' : 'Switch to Cards View';
+      localStorage.setItem('gf_view_mode', viewMode);
+    }
+
+    function toggleViewMode() {
+      viewMode = viewMode === 'cards' ? 'table' : 'cards';
+      updateViewModeUI();
+    }
+
+    if ($('btnViewCards')) $('btnViewCards').onclick = () => { viewMode = 'cards'; updateViewModeUI(); };
+    if ($('btnViewTable')) $('btnViewTable').onclick = () => { viewMode = 'table'; updateViewModeUI(); };
+    if ($('mobileViewToggle')) $('mobileViewToggle').onclick = toggleViewMode;
+    if ($('bnavViewToggle')) $('bnavViewToggle').onclick = toggleViewMode;
+
+    // Mobile Navigation Drawer Handlers
+    function openDrawer() {
+      $('drawerSide').classList.add('open');
+      $('drawerBackdrop').classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer() {
+      $('drawerSide').classList.remove('open');
+      $('drawerBackdrop').classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    if ($('btnToggleDrawer')) $('btnToggleDrawer').onclick = openDrawer;
+    if ($('btnCloseDrawer')) $('btnCloseDrawer').onclick = closeDrawer;
+    if ($('drawerBackdrop')) $('drawerBackdrop').onclick = closeDrawer;
+
+    // Auto-close drawer when clicking links on mobile
+    $('drawerSide').querySelectorAll('.nav, .formnav').forEach(el => {
+      el.addEventListener('click', () => {
+        if (window.innerWidth <= 900) closeDrawer();
+      });
+    });
+
+    // Mobile Bottom Navigation Handlers
+    if ($('bnavDesk')) $('bnavDesk').onclick = () => {
+      $('filter').value = '';
+      $('attFilter').value = '';
+      $('search').value = '';
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    if ($('bnavAdd')) $('bnavAdd').onclick = () => {
+      $('formName').value = '';
+      $('formUrl').value = '';
+      $('modalError').textContent = '';
+      $('veil').classList.add('show');
+    };
+    if ($('bnavManage')) $('bnavManage').onclick = () => {
+      renderManageModal();
+      $('manageVeil').classList.add('show');
+    };
+    if ($('bnavRefresh')) $('bnavRefresh').onclick = async () => {
+      $('syncText').textContent = 'Syncing...';
+      await sync(true, true);
+    };
+    if ($('mobileRefresh')) $('mobileRefresh').onclick = async () => {
+      $('syncText').textContent = 'Syncing...';
+      await sync(true, true);
+    };
+
+    updateViewModeUI();
+
+    let authMode = 'signin';
+    let currentUser = null;
+    let syncInterval = null;
+
+    function setAuthAlert(msg, type = 'error') {
+      const el = $('authAlert');
+      if (!msg) {
+        el.className = 'auth-alert';
+        el.textContent = '';
+        el.style.display = 'none';
+        return;
+      }
+      el.className = `auth-alert ${type}`;
+      el.textContent = msg;
+      el.style.display = 'block';
+    }
+
+    function switchAuthMode(mode) {
+      authMode = mode;
+      setAuthAlert('');
+      if (mode === 'signin') {
+        $('tabSignIn').classList.add('active');
+        $('tabSignUp').classList.remove('active');
+        $('authHeading').textContent = 'Welcome to Genesis Forms';
+        $('authSub').textContent = 'Sign in to access the Event Registration & Attendance Desk.';
+        $('btnAuthText').textContent = 'Sign In';
+        $('authToggleHint').textContent = "Don't have an account?";
+        $('btnToggleMode').textContent = 'Create one now';
+      } else {
+        $('tabSignUp').classList.add('active');
+        $('tabSignIn').classList.remove('active');
+        $('authHeading').textContent = 'Create Desk Account';
+        $('authSub').textContent = 'Create an organizer account with email and password.';
+        $('btnAuthText').textContent = 'Create Account';
+        $('authToggleHint').textContent = 'Already have an account?';
+        $('btnToggleMode').textContent = 'Sign in here';
+      }
+    }
+
+    $('tabSignIn').onclick = () => switchAuthMode('signin');
+    $('tabSignUp').onclick = () => switchAuthMode('signup');
+    $('btnToggleMode').onclick = () => switchAuthMode(authMode === 'signin' ? 'signup' : 'signin');
+
+    $('btnTogglePass').onclick = () => {
+      const f = $('authPassword');
+      if (f.type === 'password') {
+        f.type = 'text';
+        $('btnTogglePass').textContent = '🔒';
+      } else {
+        f.type = 'password';
+        $('btnTogglePass').textContent = '👁';
+      }
+    };
+
+    function showApp(user) {
+      currentUser = user;
+      if (user) {
+        $('authScreen').classList.add('hide');
+        $('app').classList.remove('hide');
+        $('userEmailBadge').textContent = user.email || 'Admin';
+        sync(false, false);
+        if (!syncInterval) {
+          syncInterval = setInterval(() => {
+            if (!document.hidden) sync(false, false);
+          }, 60000);
+        }
+      } else {
+        $('authScreen').classList.remove('hide');
+        $('app').classList.add('hide');
+        if (syncInterval) {
+          clearInterval(syncInterval);
+          syncInterval = null;
+        }
+      }
+    }
+
+    async function checkAuthSession() {
+      const token = localStorage.getItem('gf_auth_token');
+      if (!token) {
+        showApp(null);
+        return;
+      }
+      try {
+        const res = await fetch('/api/auth/me', {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (res.ok) {
+          const d = await res.json();
+          showApp(d.user);
+        } else {
+          localStorage.removeItem('gf_auth_token');
+          showApp(null);
+        }
+      } catch (err) {
+        showApp({ email: localStorage.getItem('gf_auth_email') || 'Organizer' });
+      }
+    }
+
+    if ($('btnGuestAccess')) {
+      $('btnGuestAccess').onclick = () => {
+        showApp({ email: 'guest@event.desk' });
+        toast('Signed in as Guest');
+      };
+    }
+
+    $('authForm').onsubmit = async (e) => {
+      e.preventDefault();
+      const email = $('authEmail').value.trim();
+      const password = $('authPassword').value.trim();
+      if (!email || !password) {
+        setAuthAlert('Please fill in both email and password.');
+        return;
+      }
+      $('btnSubmitAuth').disabled = true;
+      $('btnAuthText').textContent = authMode === 'signin' ? 'Signing In...' : 'Creating...';
+      try {
+        const endpoint = authMode === 'signin' ? '/api/auth/login' : '/api/auth/signup';
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        let data = {};
+        try {
+          data = await res.json();
+        } catch (_) {
+          throw new Error(`Server returned HTTP ${res.status}. Make sure the Python backend (forms_portal.py) is running on port 8000.`);
+        }
+        if (!res.ok) {
+          throw new Error(data.error || `Authentication failed (HTTP ${res.status}).`);
+        }
+        localStorage.setItem('gf_auth_token', data.token);
+        localStorage.setItem('gf_auth_email', data.email);
+        toast(authMode === 'signin' ? 'Signed in successfully!' : 'Account created & signed in!');
+        showApp({ email: data.email });
+      } catch (err) {
+        setAuthAlert(err.message);
+      } finally {
+        $('btnSubmitAuth').disabled = false;
+        $('btnAuthText').textContent = authMode === 'signin' ? 'Sign In' : 'Create Account';
+      }
+    };
+
+    $('btnSignOut').onclick = async () => {
+      const token = localStorage.getItem('gf_auth_token');
+      try {
+        if (token) {
+          await fetch('/api/auth/logout', {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + token }
+          });
+        }
+      } catch (err) {}
+      localStorage.removeItem('gf_auth_token');
+      localStorage.removeItem('gf_auth_email');
+      toast('Signed out.');
+      showApp(null);
+    };
+
+    checkAuthSession();
+
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && currentUser) {
+        sync(false, false);
+      }
+    });
+
+    // Service Worker & PWA Install Support
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+
+    let deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if ($('pwaInstallWrap')) $('pwaInstallWrap').style.display = 'block';
+      if ($('btnMobileInstall')) $('btnMobileInstall').style.display = 'grid';
+    });
+
+    async function triggerPwaInstall() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          toast('Genesis App added to Home Screen!');
+          if ($('pwaInstallWrap')) $('pwaInstallWrap').style.display = 'none';
+          if ($('btnMobileInstall')) $('btnMobileInstall').style.display = 'none';
+        }
+        deferredPrompt = null;
+      } else {
+        toast('To install: open in Chrome/Safari & tap "Add to Home Screen"');
+      }
+    }
+
+    if ($('btnInstallPwa')) $('btnInstallPwa').onclick = triggerPwaInstall;
+    if ($('btnMobileInstall')) $('btnMobileInstall').onclick = triggerPwaInstall;
+  </script>
+</body>
+
+</html>

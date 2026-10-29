@@ -1,0 +1,38 @@
+{
+  "name": "genesis-forms-web-app",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Mobile-optimized Electric Blue & Black Event Desk with AI Registration Analysis for Vercel",
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "lint": "next lint"
+  },
+  "keywords": [
+    "event-desk",
+    "google-forms",
+    "ai-analytics",
+    "supabase",
+    "vercel"
+  ],
+  "author": "Genesis Forms",
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^10.6.2",
+    "postcss": "^8.5.32",
+    "serve": "^14.2.4",
+    "tailwindcss": "^4.3.3"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.118.0",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "lucide-react": "^1.63.0",
+    "next": "^16.4.3",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "typescript": "^7.0.2"
+  }
+}

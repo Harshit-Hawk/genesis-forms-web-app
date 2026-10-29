@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production / Next.js Build
+.next/
+out/
+build/
+dist/
+
+# Environment variables & secrets (CRITICAL)
+.env
+.env.*
+!.env.example
+client_secret*.json
+local-edition/.env
+local-edition/client_secret*.json
+supabase/functions/.env
+
+# Local data & store
+portal_data.json
+portal_data.json.tmp
+local-edition/portal_data.json
+local-edition/portal_data.json.tmp
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Supabase CLI
+.branches/
+supabase/.temp/
+
+# OS metadata & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
