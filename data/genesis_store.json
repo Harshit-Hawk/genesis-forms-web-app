@@ -7038,6 +7038,33 @@
       "utr": "https://drive.google.com/open?id=1Oj_Vh7Fss2HKlyRlhLRRIf844xfIE-Qs",
       "checkedIn": false,
       "checked_in": false
+    },
+    {
+      "id": "f2d26e9597:65",
+      "form": "Ludo Mania",
+      "formName": "Ludo Mania",
+      "formId": "f2d26e9597",
+      "submitted": "10/29/2026 12:29:02",
+      "submittedAt": "10/29/2026 12:29:02",
+      "answers": {
+        "Timestamp": "10/29/2026 12:29:02",
+        "Name": "Bulbul",
+        "Mobile Number (WhatsApp)": "7404939113",
+        "Email ID": "25010042011@gateway.edu.in",
+        "College/University": "Gateway institute of engineering and technology",
+        "Course & Branch (e.g. B.Tech CSE, BBA, MCA, B.Arch)": "Bca",
+        "Year": "2",
+        "College Identity Card": "https://drive.google.com/open?id=1Atujffe7gak5JuLfGyfHVgGSG6STSVaF",
+        "Payment QR Code": "Done",
+        "Upload a payment screenshot showing the amount and UTR / transaction ID": "https://drive.google.com/open?id=1mfotxq5Gp5s9t0MSAHMsppBKC9RkxGLz",
+        "Payment Transaction / UTR ID": "630285210248",
+        "Date of Transaction": "10/29/2026"
+      },
+      "attendeeName": "Bulbul",
+      "phone": "7404939113",
+      "utr": "https://drive.google.com/open?id=1mfotxq5Gp5s9t0MSAHMsppBKC9RkxGLz",
+      "checkedIn": false,
+      "checked_in": false
     }
   ],
   "attendance": {
@@ -7046,5 +7073,5 @@
       "checkedInBy": "Organizer"
     }
   },
-  "lastSyncedAt": 1793255909595
+  "lastSyncedAt": 1793257494873
 }

@@ -2,7 +2,6 @@
 
 import React, { useState, useMemo } from 'react';
 import { FormItem, ResponseItem } from '@/types';
-import { VENUE_ALLOCATIONS } from '@/lib/data';
 import {
   LayoutDashboard,
   Users,
@@ -406,7 +405,6 @@ export const EventsOverview: React.FC<EventsOverviewProps> = ({
         }}>
           {filteredForms.map(form => {
             const stat = eventStatsMap.get(form.name.toLowerCase().trim()) || { total: 0, checkedIn: 0, teams: 0, pending: 0, percentage: 0, responses: [] };
-            const alloc = VENUE_ALLOCATIONS[form.name] || { venue: 'Auditorium Hall', capacity: 50 };
             const isCurrentlyActive = activeForm?.name.toLowerCase().trim() === form.name.toLowerCase().trim();
 
             return (
@@ -432,34 +430,9 @@ export const EventsOverview: React.FC<EventsOverviewProps> = ({
                   e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.03)';
                 }}
               >
-                {/* Header row in card */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                  <span className={`badge-${form.category?.toLowerCase() || 'general'}`} style={{
-                    padding: '2px 7px',
-                    borderRadius: '4px',
-                    fontSize: '10.5px',
-                    fontWeight: 600
-                  }}>
-                    {form.category}
-                  </span>
-
-                  <span style={{
-                    fontSize: '11px',
-                    color: 'var(--text-muted)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '4px'
-                  }}>
-                    <MapPin size={11} />
-                    <span style={{ maxWidth: '140px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      {alloc.venue}
-                    </span>
-                  </span>
-                </div>
-
                 {/* Event Name */}
                 <h4 style={{
-                  fontSize: '15px',
+                  fontSize: '15.5px',
                   fontWeight: 700,
                   color: isCurrentlyActive ? 'var(--accent)' : 'var(--text-primary)',
                   marginBottom: '12px'
